@@ -1,0 +1,35 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+`isw-route-selector`
+A Routing Test
+
+@demo demo/index.html
+-->
+
+<dom-module id="isw-route-selector">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]</h2>
+  </template>
+
+  <script>
+    class IswRouteSelector extends Polymer.Element {
+      static get is() { return 'isw-route-selector'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'isw-route-selector'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(IswRouteSelector.is, IswRouteSelector);
+  </script>
+</dom-module>
