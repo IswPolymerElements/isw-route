@@ -2,8 +2,25 @@
 <link rel="import" href="../iron-selector/iron-selectable.html">
 
 <!--
-`isw-route-selector`
-A Routing Test
+### isw-route-selector
+
+Router with app-route like API, wrapped in an iron-selectable element that binds the active route.
+
+    <app-location route="{{route}}"></app-location>
+
+    <isw-route-selector route="[[route]]" attr-for-selected="route" selected="{{selectedRoute}}" data="{{data}}">
+      <isw-route route="a" pattern="/route-a"></isw-route>
+      <isw-route route="a" pattern="/route-a/route-b"></isw-route>
+      <isw-route route="a" pattern="/route-c/:somedata"></isw-route>
+      <isw-route route="a" pattern="/route-c/route-d"></isw-route>
+    </isw-route-selector>
+
+    <iron-pages attr-for-selected="route" selected="[[selectedRoute]]">
+      <div route="a">Route A</div>
+      <div route="b">Route B</div>
+      <div route="c">Route C</div>
+      <div route="d">Route D</div>
+    </iron-pages>
 
 @demo demo/index.html
 -->
@@ -21,12 +38,16 @@ A Routing Test
 					notify: true
 				},
 				data: {
-					type: Object
+					type: Object,
+					notify: true
 				}
 			},
 
+			observers: [
+				'_onRouteChanged(route.path)'
+			],
+
 			listeners: {
-				'route-changed': '_onRouteChanged',
 				'iron-items-changed': '_onRouteChanged'
 			},
 
@@ -84,7 +105,7 @@ A Routing Test
 
 						if( match ) {
 							this.set( 'data', match.data );
-							this.selectIndex( match.index )
+							this.selectIndex( match.index );
 						}
 					}
 				}

@@ -1,35 +1,113 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>isw-route demo</title>
+	<title>isw-route demo</title>
 
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+	<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-    <link rel="import" href="../isw-route.html">
-    <link rel="import" href="../isw-route-selector.html">
+	<link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+	<link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+	<link rel="import" href="../../iron-pages/iron-pages.html">
+	<link rel="import" href="../../paper-input/paper-input.html">
+	<link rel="import" href="../../paper-button/paper-button.html">
+	<link rel="import" href="../isw-route.html">
+	<link rel="import" href="../isw-route-selector.html">
 
-    <style is="custom-style" include="demo-pages-shared-styles">
-    </style>
-  </head>
-  <body>
-    <div class="vertical-section-container centered">
-      <h3>Basic isw-route demo</h3>
-      <demo-snippet>
-        <template>
-          <isw-route-selector
-                  route="/some/test/route"
-                  selected="{{ view }}">
-            <isw-route pattern="/some/test/route" view="test"></isw-route>
-            <isw-route pattern="/some/fail/route" view="fail"></isw-route>
-            <isw-route pattern="/some/:data/route" view="data"></isw-route>
-          </isw-route-selector>
-        </template>
-      </demo-snippet>
-    </div>
-  </body>
+	<style is="custom-style" include="demo-pages-shared-styles"></style>
+
+	<style>
+		body {
+			margin: 32px;
+			font-family: 'Roboto', 'Noto', sans-serif;
+			line-height: 1.5;
+			min-height: 100vh;
+			background-color: #eeeeee;
+		}
+	</style>
+</head>
+<body>
+<dom-module id="main-document-element">
+	<template>
+		<h2>Test Routes (see source):</h2>
+		<p>
+			/resource<br>
+			/resource/create<br>
+			/resource/:id
+		</p>
+
+		<h2>Test quick change buttons</h2>
+		<paper-button on-tap="list">List</paper-button>
+		<paper-button on-tap="create">Create</paper-button>
+		<paper-button on-tap="detaila">Detail 15</paper-button>
+		<paper-button on-tap="detailb">Detail some-child</paper-button>
+
+		<h2>Manual path change</h2>
+		<paper-input label="Route Path" value="{{route.path}}"></paper-input>
+		<paper-input label="Selected" value="{{view}}" readonly></paper-input>
+
+		<isw-route-selector
+				route="[[route]]"
+				selected="{{ view }}"
+				attr-for-selected="view"
+				data="{{ data }}">
+			<isw-route view="list" pattern="/resource"></isw-route>
+			<isw-route view="create" pattern="/resource/create"></isw-route>
+			<isw-route view="details" pattern="/resource/:id"></isw-route>
+		</isw-route-selector>
+
+		<h2>Data bound iron-pages</h2>
+		<iron-pages
+				selected="[[ view ]]"
+				attr-for-selected="view">
+			<div view="list">Resource List View</div>
+			<div view="create">Create Formular</div>
+			<div view="details">Details for [[data.id]]</div>
+		</iron-pages>
+	</template>
+	<script>
+		HTMLImports.whenReady( function() {
+			class MainDocumentElement extends Polymer.Element {
+
+				static get is() {
+					return 'main-document-element';
+				}
+
+				static get properties() {
+					return {
+						route: {
+							type: Object,
+							value: {
+								path: '/resource'
+							}
+						}
+					};
+				}
+
+				list() {
+					this.set( 'route.path', '/resource' );
+				}
+
+				create() {
+					this.set( 'route.path', '/resource/create' );
+				}
+
+				detaila() {
+					this.set( 'route.path', '/resource/15' );
+				}
+
+				detailb() {
+					this.set( 'route.path', '/resource/some-child' );
+				}
+			}
+			window.customElements.define( MainDocumentElement.is, MainDocumentElement );
+		} );
+	</script>
+</dom-module>
+<main-document-element></main-document-element>
+
+
+</body>
 </html>
