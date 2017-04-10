@@ -11,6 +11,7 @@
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
     <link rel="import" href="../isw-route.html">
+    <link rel="import" href="../isw-route-selector.html">
 
     <style is="custom-style" include="demo-pages-shared-styles">
     </style>
@@ -20,7 +21,13 @@
       <h3>Basic isw-route demo</h3>
       <demo-snippet>
         <template>
-          <isw-route></isw-route>
+          <isw-route-selector
+                  route="/some/test/route"
+                  selected="{{ view }}">
+            <isw-route pattern="/some/test/route" view="test"></isw-route>
+            <isw-route pattern="/some/fail/route" view="fail"></isw-route>
+            <isw-route pattern="/some/:data/route" view="data"></isw-route>
+          </isw-route-selector>
         </template>
       </demo-snippet>
     </div>

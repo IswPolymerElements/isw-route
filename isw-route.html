@@ -8,28 +8,24 @@ A Routing Test
 -->
 
 <dom-module id="isw-route">
-  <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
-    <h2>Hello [[prop1]]</h2>
-  </template>
+	<template>
+	</template>
 
-  <script>
-    class IswRoute extends Polymer.Element {
-      static get is() { return 'isw-route'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'isw-route'
-          }
-        };
-      }
-    }
+	<script>
+		class IswRoute extends Polymer.Element {
+			static get is() {
+				return 'isw-route';
+			}
 
-    window.customElements.define(IswRoute.is, IswRoute);
-  </script>
+			static get properties() {
+				return {
+					pattern: {
+						type: String
+					}
+				};
+			}
+		}
+
+		window.customElements.define( IswRoute.is, IswRoute );
+	</script>
 </dom-module>

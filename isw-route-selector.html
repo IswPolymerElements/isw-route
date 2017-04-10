@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-selector/iron-selectable.html">
 
 <!--
 `isw-route-selector`
@@ -8,28 +9,86 @@ A Routing Test
 -->
 
 <dom-module id="isw-route-selector">
-  <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
-    <h2>Hello [[prop1]]</h2>
-  </template>
 
-  <script>
-    class IswRouteSelector extends Polymer.Element {
-      static get is() { return 'isw-route-selector'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'isw-route-selector'
-          }
-        };
-      }
-    }
+	<script>
+		Polymer({
+			is: 'isw-route-selector',
+			behaviors: [ Polymer.IronSelectableBehavior ],
 
-    window.customElements.define(IswRouteSelector.is, IswRouteSelector);
-  </script>
+			properties: {
+				route: {
+					type: String,
+					notify: true
+				},
+				data: {
+					type: Object
+				}
+			},
+
+			listeners: {
+				'route-changed': '_onRouteChanged',
+				'iron-items-changed': '_onRouteChanged'
+			},
+
+			_onRouteChanged: function() {
+				if( this.items && this.route ) {
+					// Highest priority match.
+					var match;
+
+					// Split the route.
+					var routeParts = this.route.path.split( '/' );
+
+					// Iterate items from IronSelectableBehavior.
+					for( var i = 0; i < this.items.length; i++ ) {
+						// Check that the item has an pattern.
+						if( this.items[ i ].pattern ) {
+							// Split the pattern.
+							var patternParts = this.items[ i ].pattern.split( '/' );
+
+							// Data from the placeholders.
+							var data = {};
+							// Some improvised priority system.
+							// Parts in front are more important, placeholder less important.
+							var priority = 0;
+							var failed = false;
+
+							// Iterate route parts.
+							for( var j = 0; j < patternParts.length; j++ ) {
+								// Ignore empty pattern parts.
+								if( patternParts[ j ] ) {
+									if( patternParts[ j ] == routeParts[ j ] ) {
+										// Direct match.
+										priority += (10 - j) * 2;
+									} else if( patternParts[ j ].charAt( 0 ) == ':' && routeParts[ j ] ) {
+										// Placeholder match.
+										data[ patternParts[ j ].slice( 1 ) ] = routeParts[ j ];
+										priority += 10 - j;
+									} else {
+										// No match.
+										failed = true;
+									}
+								}
+							}
+
+							if( !failed ) {
+								// If there is no match, or an match with lower priority, replace.
+								if( !match || match.priority < priority ) {
+									match = {
+										index: i,
+										data: data,
+										priority: priority
+									};
+								}
+							}
+						}
+
+						if( match ) {
+							this.set( 'data', match.data );
+							this.selectIndex( match.index )
+						}
+					}
+				}
+			}
+		});
+	</script>
 </dom-module>
