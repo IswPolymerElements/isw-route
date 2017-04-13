@@ -2,6 +2,8 @@
 
 Router with app-route like API, wrapped in an iron-selectable element that binds the active route.
 
+Demo Link: https://www.webcomponents.org/element/IswPolymerElements/isw-route/demo/demo/index.html
+
 ```html
 <app-location route="{{route}}"></app-location>
 
