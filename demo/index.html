@@ -8,43 +8,69 @@
 
 	<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-	<link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-	<link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+	<link rel="import" href="../../app-layout/app-layout.html">
 	<link rel="import" href="../../iron-pages/iron-pages.html">
 	<link rel="import" href="../../paper-input/paper-input.html">
 	<link rel="import" href="../../paper-button/paper-button.html">
+	<link rel="import" href="../../paper-material/paper-material.html">
+
 	<link rel="import" href="../isw-route.html">
 	<link rel="import" href="../isw-route-selector.html">
 
-	<style is="custom-style" include="demo-pages-shared-styles"></style>
-
 	<style>
 		body {
-			margin: 32px;
 			font-family: 'Roboto', 'Noto', sans-serif;
 			line-height: 1.5;
-			min-height: 100vh;
-			background-color: #eeeeee;
+			background-color: #FFFFFF;
+		}
+
+		#drawer {
+			background-color: #DDDDDD;
+			height: 100%;
+		}
+
+		app-toolbar {
+			color: #FFFFFF;
+			background: #00508C;
 		}
 	</style>
 </head>
 <body>
-	<dom-module id="main-document-element">
+	<dom-module id="demo-element-view">
 		<template>
-			<h2>Test Routes (see source):</h2>
+			<style>
+				:host {
+					display: block;
+					padding: 32px;
+				}
+
+				paper-button {
+					color: #FFFFFF;
+					background: #00508C;
+				}
+
+				iron-pages {
+					@apply --shadow-elevation-2dp;
+					padding: 32px;
+					min-height: 200px;
+					background-color: #EEEEEE;
+				}
+			</style>
+
+			<h3>Test Routes (see source):</h3>
 			<p>
 				/resource<br>
 				/resource/create<br>
 				/resource/:id
 			</p>
 
-			<h2>Test quick change buttons</h2>
-			<paper-button on-tap="list">List</paper-button>
-			<paper-button on-tap="create">Create</paper-button>
-			<paper-button on-tap="detaila">Detail 15</paper-button>
-			<paper-button on-tap="detailb">Detail some-child</paper-button>
+			<h3>Path quick change buttons</h3>
+			<paper-button on-tap="list" raised>List</paper-button>
+			<paper-button on-tap="create" raised>Create</paper-button>
+			<paper-button on-tap="detaila" raised>Detail 15</paper-button>
+			<paper-button on-tap="detailb" raised>Detail some-child</paper-button>
 
-			<h2>Manual path change</h2>
+			<h3>Manual path change</h3>
 			<paper-input label="Route Path" value="{{route.path}}"></paper-input>
 			<paper-input label="Selected" value="{{view}}" readonly></paper-input>
 
@@ -59,20 +85,22 @@
 			</isw-route-selector>
 
 			<h2>Data bound iron-pages</h2>
-			<iron-pages
-					selected="[[ view ]]"
-					attr-for-selected="view">
-				<div view="list">Resource List View</div>
-				<div view="create">Create Formular</div>
-				<div view="details">Details for [[data.id]]</div>
-			</iron-pages>
+			<div>
+				<iron-pages
+						selected="[[ view ]]"
+						attr-for-selected="view">
+					<div view="list">Resource List View</div>
+					<div view="create">Create Formular</div>
+					<div view="details">Details for [[data.id]]</div>
+				</iron-pages>
+			</div>
 		</template>
 		<script>
 			HTMLImports.whenReady( function() {
-				class MainDocumentElement extends Polymer.Element {
+				class DemoElementView extends Polymer.Element {
 
 					static get is() {
-						return 'main-document-element';
+						return 'demo-element-view';
 					}
 
 					static get properties() {
@@ -102,13 +130,21 @@
 						this.set( 'route.path', '/resource/some-child' );
 					}
 				}
-				window.customElements.define( MainDocumentElement.is, MainDocumentElement );
+				window.customElements.define( DemoElementView.is, DemoElementView );
 			} );
 		</script>
 	</dom-module>
 
-<main-document-element></main-document-element>
-
-
+	<app-drawer-layout fullbleed>
+		<app-drawer slot="drawer">
+			<div id="drawer"></div>
+		</app-drawer>
+		<app-header-layout fixed condenses>
+			<app-header slot="header">
+				<app-toolbar>isw-dialog demo</app-toolbar>
+			</app-header>
+			<demo-element-view></demo-element-view>
+		</app-header-layout>
+	</app-drawer-layout>
 </body>
 </html>
