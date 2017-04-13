@@ -29,83 +29,84 @@
 	</style>
 </head>
 <body>
-<dom-module id="main-document-element">
-	<template>
-		<h2>Test Routes (see source):</h2>
-		<p>
-			/resource<br>
-			/resource/create<br>
-			/resource/:id
-		</p>
+	<dom-module id="main-document-element">
+		<template>
+			<h2>Test Routes (see source):</h2>
+			<p>
+				/resource<br>
+				/resource/create<br>
+				/resource/:id
+			</p>
 
-		<h2>Test quick change buttons</h2>
-		<paper-button on-tap="list">List</paper-button>
-		<paper-button on-tap="create">Create</paper-button>
-		<paper-button on-tap="detaila">Detail 15</paper-button>
-		<paper-button on-tap="detailb">Detail some-child</paper-button>
+			<h2>Test quick change buttons</h2>
+			<paper-button on-tap="list">List</paper-button>
+			<paper-button on-tap="create">Create</paper-button>
+			<paper-button on-tap="detaila">Detail 15</paper-button>
+			<paper-button on-tap="detailb">Detail some-child</paper-button>
 
-		<h2>Manual path change</h2>
-		<paper-input label="Route Path" value="{{route.path}}"></paper-input>
-		<paper-input label="Selected" value="{{view}}" readonly></paper-input>
+			<h2>Manual path change</h2>
+			<paper-input label="Route Path" value="{{route.path}}"></paper-input>
+			<paper-input label="Selected" value="{{view}}" readonly></paper-input>
 
-		<isw-route-selector
-				route="[[route]]"
-				selected="{{ view }}"
-				attr-for-selected="view"
-				data="{{ data }}">
-			<isw-route view="list" pattern="/resource"></isw-route>
-			<isw-route view="create" pattern="/resource/create"></isw-route>
-			<isw-route view="details" pattern="/resource/:id"></isw-route>
-		</isw-route-selector>
+			<isw-route-selector
+					route="[[route]]"
+					selected="{{ view }}"
+					attr-for-selected="view"
+					data="{{ data }}">
+				<isw-route view="list" pattern="/resource"></isw-route>
+				<isw-route view="create" pattern="/resource/create"></isw-route>
+				<isw-route view="details" pattern="/resource/:id"></isw-route>
+			</isw-route-selector>
 
-		<h2>Data bound iron-pages</h2>
-		<iron-pages
-				selected="[[ view ]]"
-				attr-for-selected="view">
-			<div view="list">Resource List View</div>
-			<div view="create">Create Formular</div>
-			<div view="details">Details for [[data.id]]</div>
-		</iron-pages>
-	</template>
-	<script>
-		HTMLImports.whenReady( function() {
-			class MainDocumentElement extends Polymer.Element {
+			<h2>Data bound iron-pages</h2>
+			<iron-pages
+					selected="[[ view ]]"
+					attr-for-selected="view">
+				<div view="list">Resource List View</div>
+				<div view="create">Create Formular</div>
+				<div view="details">Details for [[data.id]]</div>
+			</iron-pages>
+		</template>
+		<script>
+			HTMLImports.whenReady( function() {
+				class MainDocumentElement extends Polymer.Element {
 
-				static get is() {
-					return 'main-document-element';
-				}
+					static get is() {
+						return 'main-document-element';
+					}
 
-				static get properties() {
-					return {
-						route: {
-							type: Object,
-							value: {
-								path: '/resource'
+					static get properties() {
+						return {
+							route: {
+								type: Object,
+								value: {
+									path: '/resource'
+								}
 							}
-						}
-					};
-				}
+						};
+					}
 
-				list() {
-					this.set( 'route.path', '/resource' );
-				}
+					list() {
+						this.set( 'route.path', '/resource' );
+					}
 
-				create() {
-					this.set( 'route.path', '/resource/create' );
-				}
+					create() {
+						this.set( 'route.path', '/resource/create' );
+					}
 
-				detaila() {
-					this.set( 'route.path', '/resource/15' );
-				}
+					detaila() {
+						this.set( 'route.path', '/resource/15' );
+					}
 
-				detailb() {
-					this.set( 'route.path', '/resource/some-child' );
+					detailb() {
+						this.set( 'route.path', '/resource/some-child' );
+					}
 				}
-			}
-			window.customElements.define( MainDocumentElement.is, MainDocumentElement );
-		} );
-	</script>
-</dom-module>
+				window.customElements.define( MainDocumentElement.is, MainDocumentElement );
+			} );
+		</script>
+	</dom-module>
+
 <main-document-element></main-document-element>
 
 
