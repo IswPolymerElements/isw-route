@@ -12,17 +12,21 @@ A Routing Test
 	</template>
 
 	<script>
-		Polymer( {
-			is: 'isw-route',
+		class IswRoute extends Polymer.Element {
+			static get is() {
+				return 'isw-route';
+			}
 
-			properties: {
-				/**
-				 * The pattern of slash-separated segments to match path against.
-				 */
-				pattern: {
-					type: String
+			static get properties() {
+				return {
+					/**
+					 * The pattern of slash-separated segments to match path against.
+					 */
+					pattern: {
+						type: String
+					}
 				}
 			}
-		});
+		}
 	</script>
 </dom-module>

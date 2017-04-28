@@ -108,11 +108,13 @@ Router with app-route like API, wrapped in an iron-selectable element that binds
 								}
 							}
 						}
+					}
 
-						if( match ) {
-							this.set( 'data', match.data );
-							this.selectIndex( match.index );
-						}
+					if( match ) {
+						this.set( 'data', match.data );
+						this.set( 'selected', this._indexToValue( match.index ) );
+					} else {
+						this.select( this.fallbackSelection );
 					}
 				}
 			}
