@@ -116,6 +116,8 @@ Router with app-route like API, wrapped in an iron-selectable element that binds
 					} else {
 						this.select( this.fallbackSelection );
 					}
+
+					this.dispatchEvent( new CustomEvent( 'isw-route-changed' ) );
 				}
 			}
 		});
