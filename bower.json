@@ -1,7 +1,10 @@
 {
   "name": "isw-route",
   "description": "A Routing Test",
-  "main": "isw-route.html",
+  "main": [
+    "isw-route-selector.html",
+    "isw-route.html"
+  ],
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0"
   },
