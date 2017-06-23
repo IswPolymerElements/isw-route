@@ -9,9 +9,9 @@ Demo Link: https://www.webcomponents.org/element/IswPolymerElements/isw-route/de
 
 <isw-route-selector route="[[route]]" attr-for-selected="route" selected="{{selectedRoute}}" data="{{data}}">
   <isw-route route="a" pattern="/route-a"></isw-route>
-  <isw-route route="a" pattern="/route-a/route-b"></isw-route>
-  <isw-route route="a" pattern="/route-c/:somedata"></isw-route>
-  <isw-route route="a" pattern="/route-c/route-d"></isw-route>
+  <isw-route route="b" pattern="/route-a/route-b"></isw-route>
+  <isw-route route="c" pattern="/route-c/:somedata"></isw-route>
+  <isw-route route="d" pattern="/route-c/route-d"></isw-route>
 </isw-route-selector>
 
 <iron-pages attr-for-selected="route" selected="[[selectedRoute]]">
